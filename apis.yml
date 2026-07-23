@@ -30,6 +30,7 @@ tags:
 - Data Aggregation
 created: '2026-07-23'
 modified: '2026-07-23'
+enriched: '2026-07-23'
 specificationVersion: '0.19'
 apis:
 - aid: truist:truist-personal-and-small-business-accounts-api
@@ -71,6 +72,8 @@ apis:
   - type: Documentation
     url: https://truist-1132.my.site.com/truist/s/
 common:
+- type: DomainSecurity
+  url: security/truist-domain-security.yml
 - type: Website
   url: https://www.truist.com
 - type: DeveloperPortal
@@ -79,6 +82,14 @@ common:
   url: https://truist-1132.my.site.com/truist/s/
 - type: Documentation
   url: https://developer.truist.com/api/working-with-truist
+- type: GettingStarted
+  url: https://developer.truist.com/api/working-with-truist
+- type: APIReference
+  url: https://developer.truist.com/api/view-api
+- type: SignUp
+  url: https://developer.truist.com/signup
+- type: Login
+  url: https://developer.truist.com/ui/login/1000
 - type: LinkedIn
   url: https://www.linkedin.com/company/truist
 - type: PrivacyPolicy
@@ -87,6 +98,10 @@ common:
   url: https://www.truist.com/terms-and-conditions
 - type: Support
   url: https://www.truist.com/support
+- type: LLMsTxt
+  url: llms/truist-llms.txt
+- type: Conformance
+  url: conformance/truist-conformance.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

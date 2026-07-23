@@ -1,0 +1,108 @@
+aid: truist
+name: Truist
+review:
+  question: Does Truist expose a public first-party production API, and what is its US open-finance posture (developer portal, downloadable specs, FDX participation, CFPB 1033, auth model, aggregator access)?
+  answer: partial
+  date: '2026-07-23'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    Truist runs a genuine first-party developer portal, the Truist Developer
+    Center at https://developer.truist.com/ (confirmed HTTP 200). It is an
+    Angular single-page application whose API catalog is client-rendered and
+    gated behind registration and Microsoft Entra / Azure AD B2C (MSAL) auth
+    - the bundled JavaScript is a white-label developer-portal platform (the
+    same vendor code that also powers M&T Bank's developer.mtb.com, whose
+    hostnames remain hardcoded in the shared bundle). The portal publishes
+    Open Banking APIs (personal and small-business accounts, balances,
+    transactions, and credit-transfer payments) but explicitly ONLY in a
+    Sandbox environment that returns mock demo responses; there is no open
+    production API and no publicly downloadable OpenAPI/Swagger document. A
+    second surface, the Truist Open Banking API Developer Portal on Salesforce
+    Experience Cloud (https://truist-1132.my.site.com/truist/s/, HTTP 200),
+    handles consumer-permissioned data sharing. Truist's real consumer
+    data-access posture is FDX-aligned and aggregator-mediated: it signed a
+    Plaid data-access agreement using an FDX-aligned, tokenized API that
+    replaces credential sharing, and it participates in the Financial Data
+    Exchange (FDX) ecosystem. On CFPB Section 1033, Truist has publicly stated
+    it remains committed to complying with applicable personal-financial-data
+    laws and continues to adapt to evolving guidance, but exposes no distinct
+    public 1033 API. No spec was harvested (nothing downloadable). Note: the
+    GitHub org github.com/truist is an unrelated individual, not the bank, so
+    no GitHubOrganization link is recorded.
+  posture:
+    firstPartyDeveloperPortal: true
+    developerPortalUrl: https://developer.truist.com/
+    developerPortalHttpStatus: 200
+    openBankingDataPortalUrl: https://truist-1132.my.site.com/truist/s/
+    openBankingDataPortalHttpStatus: 200
+    productionApiPublic: false
+    sandboxOnlyMockData: true
+    downloadableOpenAPI: false
+    specHarvested: false
+    specProvenance: none
+    fdxParticipant: true
+    fdxAligned: true
+    cfpb1033Posture: monitoring-and-complying (public statement; no distinct 1033 API surface)
+    aggregatorAccess:
+      - Plaid
+    authModel: OAuth2 / OpenID Connect via Microsoft Entra (Azure AD B2C, MSAL); portal registration required
+  transports:
+    - protocol: REST
+      scheme: https
+      documented: true
+      note: Open Banking REST APIs documented in the Truist Developer Center sandbox (mock responses only). Production base URLs are not publicly published.
+    - protocol: REST
+      scheme: https
+      documented: true
+      note: FDX-aligned data-access API delivered via aggregator (Plaid) and the Truist Open Banking data-sharing portal.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket surface is documented.
+  probes:
+    - url: https://developer.truist.com/
+      status: 200
+      note: Truist Developer Center SPA shell ("Truist Developer Center."); catalog rendered client-side after registration/auth.
+    - url: https://developer.truist.com/api/personal-and-small-business-accounts/overview
+      status: 200
+      note: Personal and Small Business Accounts API overview route (SPA route).
+    - url: https://developer.truist.com/api/working-with-truist
+      status: 200
+      note: Getting-started / working-with-Truist documentation route.
+    - url: https://developer.truist.com/api/view-api
+      status: 200
+      note: API reference / view-api route.
+    - url: https://truist-1132.my.site.com/truist/s/
+      status: 200
+      note: Truist Open Banking API Developer Portal (Salesforce Experience Cloud).
+    - url: https://api.truist.com/
+      status: 404
+      note: No public API gateway host at api.truist.com.
+    - url: https://www.truist.com/
+      status: 200
+    - url: https://www.linkedin.com/company/truist
+      status: 200
+    - url: https://github.com/truist
+      status: 200
+      note: Belongs to an unrelated individual (Nathan Arthur), NOT Truist Bank; excluded from apis.yml.
+sources:
+  - url: https://developer.truist.com/
+    type: DeveloperPortal
+    note: First-party Truist Developer Center; Open Banking APIs; sandbox/mock-data, registration-gated.
+  - url: https://truist-1132.my.site.com/truist/s/
+    type: Portal
+    note: Truist Open Banking API Developer Portal for consumer-permissioned data sharing.
+  - url: https://www.americanbanker.com/news/truist-and-plaid-announce-data-sharing-partnership
+    type: Reference
+    note: Truist-Plaid FDX-aligned data-sharing partnership replacing credential sharing.
+  - url: https://financialdataexchange.org/
+    type: Reference
+    note: Financial Data Exchange (FDX) - US consumer-permissioned data-sharing standard; Truist participates in the FDX ecosystem.
+actions:
+  openapiHarvested: false
+  reason: |
+    Nothing downloadable to harvest. The developer.truist.com catalog is
+    client-rendered and gated behind registration and Azure AD B2C auth with
+    only sandbox/mock responses; no OpenAPI/Swagger is exposed publicly, and
+    the FDX-aligned data access is aggregator-mediated (member-gated spec).

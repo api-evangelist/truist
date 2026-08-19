@@ -42,7 +42,7 @@ tags:
 created: '2026-07-23'
 modified: '2026-07-23'
 enriched: '2026-07-23'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: truist:truist-personal-and-small-business-accounts-api
   name: Truist Personal and Small Business Accounts API
